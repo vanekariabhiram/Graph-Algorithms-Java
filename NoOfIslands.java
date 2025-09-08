@@ -75,6 +75,44 @@ public class NoOfIslands {
             }
         }
     }
+    // method 2 without using the visited array
+    static int numIslandss(char[][]grid){
+        int rows=grid.length;
+        int cols=grid[0].length;
+        int[][]directions={{1,0},{-1,0},{0,1},{0,-1}};
+        int totalIslands=0;
+        for (int r = 0; r <rows; r++) {
+            for (int c=0;c<cols;c++){
+                if (grid[r][c]=='1'){
+                    totalIslands++;
+                    bfs2(grid,r,c,directions);
+                }
+            }
+
+        }
+        return totalIslands;
+    }
+    
+    static void bfs2(char[][]grid,int r,int c,int[][]directions){
+        Queue<int[]> queue=new LinkedList<>();
+       queue.offer(new int[]{r,c});
+       grid[r][c]=0;
+       while(!queue.isEmpty()){
+           int[]cell=queue.poll();
+           int currentRow=cell[0];
+           int currentCol=cell[1];
+           for(int[]direc:directions){
+               int NewRow=currentRow+direc[0];
+               int NewCol=currentCol+direc[1];
+               if (NewRow>=0&&NewRow<grid.length&&NewCol>=0&&NewCol<grid[0].length&&grid[NewRow][NewCol]=='1'){
+                   queue.add(new int[]{NewRow,NewCol});
+                   grid[NewRow][NewCol]='0';
+               }
+           }
+       }
+
+
+    }
 
     public static void main(String[] args) {
         // Sample 4x5 grid
