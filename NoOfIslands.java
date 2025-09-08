@@ -113,6 +113,34 @@ public class NoOfIslands {
 
 
     }
+    // lets solve these using dfs approach
+public static int numIslandsDfs(char[][] grid) {
+        int TotalIslands=0;
+        int rows=grid.length;
+        int cols=grid[0].length;
+        for (int r=0;r<rows;r++){
+            for (int c=0;c<cols;c++){
+                if (grid[r][c]=='1'){
+                    TotalIslands++;
+                    dfs(grid,r,c);
+                }
+            }
+        }
+        return TotalIslands;
+}
+static void dfs(char[][]grid,int rows,int cols){
+        if (rows<0 || cols<0 || rows>=grid.length || cols>=grid[0].length ){
+            return;
+        }
+        if (grid[rows][cols]=='0'){
+            return;
+        }
+        grid[rows][cols]='0';
+        dfs(grid,rows-1,cols);
+        dfs(grid,rows+1,cols);
+        dfs(grid,rows,cols-1);
+        dfs(grid,rows,cols+1);
+}
 
     public static void main(String[] args) {
         // Sample 4x5 grid
