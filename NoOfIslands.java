@@ -141,7 +141,45 @@ static void dfs(char[][]grid,int rows,int cols){
         dfs(grid,rows,cols-1);
         dfs(grid,rows,cols+1);
 }
-
+// leetcode 130 Surrounded Regions
+public void solve(char[][] board) {
+if (board==null || board.length==0){
+    return;
+}
+int rows=board.length;
+int cols=board[0].length;
+    for (int r = 0; r <rows; r++) {
+        dfss(board,r,0);
+        dfss(board,r,cols-1);
+    }
+    for (int c = 0; c <rows; c++) {
+        dfss(board,0,c);
+        dfss(board,rows-1,c);
+    }
+    for (int r=0;r<rows;r++){
+        for (int c = 0; c <cols; c++) {
+            if (board[r][c]=='O'){
+                board[r][c]='X';
+            }
+            else if (board[r][c]=='#'){
+                board[r][c]='O';
+            }
+        }
+    }
+}
+static void dfss(char[][]grid,int rows,int cols){
+    if (rows<0 || cols<0 || rows>=grid.length || cols>=grid[0].length ){
+        return;
+    }
+    if (grid[rows][cols]!='O'){
+        return;
+    }
+    grid[rows][cols]='#';
+    dfss(grid,rows-1,cols);
+    dfss(grid,rows+1,cols);
+    dfss(grid,rows,cols-1);
+    dfss(grid,rows,cols+1);
+}
     public static void main(String[] args) {
         // Sample 4x5 grid
         char[][] grid = {
