@@ -91,6 +91,39 @@ public class DijkstraAlgo {
         }
         return dist;
     }
-    // These method is optimized appraoch
+    // These method is optimized approach
+   static class Pair{
+        int node;
+        int dist;
+        Pair(int node,int dist){
+            this.node=node;
+            this.dist=dist;
+        }
+    }
+    static int[]dijkstrasAlgo2(int V, List<List<Pair>>graph,int src){
+        int[]dist=new int[V];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[src]=0;
+        PriorityQueue<Pair>pq=new PriorityQueue<>(Comparator.comparing(a->a.dist)); // based on the distance i.e least one would be my min heap it would be poll()
+        pq.offer(new Pair(src,0));
+
+        while(!pq.isEmpty()){
+            Pair curr=pq.poll();
+            int u=curr.node;
+            int d=curr.dist;
+            if (d>dist[u])continue; // skip multiple entries of same node with least one
+
+            // relaxation of nodes
+            for (Pair edge:graph.get(u)){
+                int v=edge.node;
+                int w=edge.dist;
+                if ((dist[u]+w)<dist[v]){
+                    dist[v]=dist[u]+w;
+                    pq.add(new Pair(v,dist[v]));
+                }
+            }
+        }
+        return dist;
+    }
     
 }
