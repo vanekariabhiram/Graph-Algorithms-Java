@@ -36,7 +36,17 @@ public class DijkstraAlgo {
             }
             System.out.println();
         }
+        // to run second method
+     List<List<Pair>> graph = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            graph.add(new ArrayList<>());
+        }
 
+        for (int[] e : edges) {
+            int u = e[0], v = e[1], w = e[2];
+            graph.get(u).add(new Pair(v, w));
+            graph.get(v).add(new Pair(u, w));
+        }
         // Run Dijkstra
         int src=0;
         int[] dist = dijkstra(V, edges, src);
