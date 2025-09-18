@@ -80,6 +80,43 @@ public class Problems {
 
         return -1;
     }
+     // knight walk gfg
+    public int minStepToReachTarget(int KnightPos[], int TargetPos[], int N) {
+        int[][]Knightdirections= {{-2, -1}, {-2, 1},
+                {-1, -2}, {-1, 2},
+                {1, -2},  {1, 2},
+                {2, -1},  {2, 1}};
+
+        int startX=KnightPos[0]-1;
+        int startY=KnightPos[1]-1;
+        int targetX=TargetPos[0]-1;
+        int targetY=TargetPos[1]-1;
+
+        boolean[][]visited=new boolean[N][N];
+        visited[startX][startY]=true;
+        Queue<int[]>queue=new LinkedList<>();
+        queue.add(new int[]{startX,startY,0});
+        while(!queue.isEmpty()){
+            int[]curr=queue.poll();
+            int x=curr[0];
+            int y=curr[1];
+            int steps=curr[2];
+            if (x==targetX && y==targetY){
+                return steps;
+            }
+            for(int[]dir:Knightdirections){
+                int newX=x+dir[0];
+                int newY=y+dir[1];
+
+                if (newX>=0 && newY>=0 && newX < N && newY<N && !visited[newX][newY] ){
+                    visited[newX][newY]=true;
+                    queue.offer(new int[]{newX,newY,steps+1});
+                }
+            }
+
+        }
+        return -1;
+    }
     static void main() {
         int[][] grid = {
                 {0, 0, 0},
