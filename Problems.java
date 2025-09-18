@@ -117,6 +117,46 @@ public class Problems {
         }
         return -1;
     }
+      // leetcode 1197 minimum knight moves
+     public int minKnightMoves(int x, int y) {
+        // converting all negative coordinates to only one positive quadrant 1
+        x=Math.abs(x);
+        y=Math.abs(y);
+        int[][]Knightdirections= {{-2, -1}, {-2, 1},
+                {-1, -2}, {-1, 2},
+                {1, -2},  {1, 2},
+                {2, -1},  {2, 1}};
+        Queue<int[]>queue=new LinkedList<>();
+        queue.offer(new int[]{0,0,0});
+
+        // taking set since they have not given array size we are adding in set and avoiding revisiting position again
+        Set<String>visited=new HashSet<>();
+        visited.add("0,0");
+        while(!queue.isEmpty()){
+            int[]curr=queue.poll();
+            int cx=curr[0];
+            int cy=curr[1];
+            int steps=curr[2];
+
+            if (cx==x && cy==y){
+                return steps;
+
+            }
+            for(int[]dir:Knightdirections){
+                int newX=cx+dir[0];
+                int newY=cy+dir[1];
+
+                if (newX>=-1 && newY>=-1){// here we are only considering quadrant 1 but sometimes the knight move are l shape so maybe it can go into q2
+                    String key=newX+","+newY;
+                    if (!visited.contains(key)){
+                        visited.add(key);
+                        queue.offer(new int[]{newX,newY,steps+1});
+                    }
+                }
+            }
+        }
+return -1;
+    }
     static void main() {
         int[][] grid = {
                 {0, 0, 0},
