@@ -49,7 +49,37 @@ public class Problems {
 
         return -1;
     }
+ // method 2 without visited array
+    // instead of taking boolean visited array and marking true we just replace by marking 1 at current position .
+    public static int shortestPathBinaryMatrix2(int[][] grid) {
+        int n=grid.length;
+        if (grid[0][0]==1 || grid[n-1][n-1]==1){
+            return -1;
+        }
+        Queue<int[]>queue=new LinkedList<>();
+        queue.offer(new int[]{0,0,1});
+        grid[0][0]=1; // marking starting path as 1 same like visited array
+        while(!queue.isEmpty()){
+          int[]curr=queue.poll();
+          int x=curr[0];
+          int y=curr[1];
+          int step=curr[2];
 
+          if (x==n-1 && y==n-1){
+              return step;
+          }
+          for(int[]dir:directions){
+              int newX=dir[0];
+              int newY=dir[1];
+              if (newX>=0 && newY>=0 && newX<n &&newY<n && grid[newX][newY]==0) {
+                  queue.offer(new int[]{newX, newY, step + 1});
+                  grid[newX][newY] = 1;// marking current path 1 same like visited
+              }
+          }
+        }
+
+        return -1;
+    }
     static void main() {
         int[][] grid = {
                 {0, 0, 0},
